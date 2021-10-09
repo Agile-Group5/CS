@@ -1,24 +1,19 @@
 package com.se459.floor;
 
-import com.se459.floor.interfaces.ISurfacesFactory;
+import com.se459.floor.interfaces.ISurfaces;
 
-public class SurfacesFactory implements ISurfacesFactory {
-    
-    @Override
-    ISurfaces createBareFloor() {
-        return new FloorTile();
+public class SurfacesFactory {
+
+    public static ISurfaces createBareSurface() {
+        return new FloorTile(1, "Bare");
     }
 
-    @Override
-    ISurfaces createLowCarpet() {
-        return new FloorTile();
+    public static ISurfaces createLowCarpet() {
+        return new FloorTile(2, "LowCarpet");
     }
 
-    @Override
-    ISurfaces createHighCarpet() {
-        return new FloorTile();
+    public static ISurfaces createHighCarpet() {
+        return new FloorTile(3, "HighCarpet");
     }
-
-
 
 }
