@@ -1,5 +1,7 @@
 package com.se459.floor;
 
-public class FloorTile {
+import com.se459.floor.interfaces.ISurfaces;
+
+public class FloorTile implements ISurfaces {
 
 }
