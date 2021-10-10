@@ -6,5 +6,7 @@ public interface ISurfaces {
 
     int getSurfaceCost();
 
+    boolean hasDirt();
+
 
 }

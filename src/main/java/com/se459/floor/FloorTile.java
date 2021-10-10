@@ -25,4 +25,7 @@ public class FloorTile implements ISurfaces {
     @Override
     public int getSurfaceCost() {return surfaceCost;}
 
+    @Override
+    public boolean hasDirt() {return isDirty;}
+
 }
