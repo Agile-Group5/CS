@@ -14,10 +14,11 @@ import org.json.JSONObject;
 
 public class FloorLayout implements IFloorLayout {
     
-    private List<List<ISurfaces>> floor;
+    private final List<List<ISurfaces>> floor;
     private JSONArray jsonArray;
 
     public FloorLayout(String jsonFileName) {
+        List<List<ISurfaces>> grid = null;
         StringBuilder stringInput = new StringBuilder();
         String jsonPath = "/json/"+jsonFileName;
 
@@ -30,7 +31,7 @@ public class FloorLayout implements IFloorLayout {
             }
 
             jsonArray = new JSONArray(stringInput.toString());
-            floor = jsonToArrayLists();
+            grid = jsonToArrayLists();
 
             scan.close();
             inputStream.close();
@@ -41,6 +42,8 @@ public class FloorLayout implements IFloorLayout {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        floor = grid;
     }
 
     private List<List<ISurfaces>> jsonToArrayLists() {
@@ -84,6 +87,12 @@ public class FloorLayout implements IFloorLayout {
         return layout;
     }
     
+    /***
+     * 
+     * Method to return the floor
+     */
+    @Override
+    public List<List<ISurfaces>> getFloor() { return floor; }
 
     /***
      * 
