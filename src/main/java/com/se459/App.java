@@ -13,14 +13,9 @@ public class App
     {
         IFloorLayout floor = new FloorLayout("floor_layout.json");
 
-        // printing floor in detail
-        floor.printDetailLayout();
-
-
-        System.out.printf("\n\n\n");
-
-        // printing floor
-        System.out.println(floor.toString());
-
+        System.out.println("\n");
+        //floor.printDetailLayout();             // printing floor in detail
+        System.out.println(floor.toString());    // printing floor
+        System.out.println("\n");
     }
 }

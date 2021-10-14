@@ -35,7 +35,10 @@ public class FloorLayout implements IFloorLayout {
             scan.close();
             inputStream.close();
 
-        } catch(Exception e) {
+        } catch(NullPointerException e) {
+            System.err.printf("***ERROR: Could not open file.\n");
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -53,24 +56,27 @@ public class FloorLayout implements IFloorLayout {
                 JSONObject jsonTile = col.getJSONObject(j);
 
                 // creating tile from json data
-                ISurfaces tile = null;
-                String tileType = jsonTile.getString("type");
-                boolean hasDirt = jsonTile.getBoolean("isDirty");
-                boolean hasChargeStation = jsonTile.getBoolean("hasChargeStation");
-
                 try {
+                    ISurfaces tile = null;
+                    String tileType = jsonTile.getString("type");
+                    boolean hasDirt = jsonTile.getBoolean("isDirty");
+                    boolean hasChargeStation = jsonTile.getBoolean("hasChargeStation");
+                
                     if (tileType.equals("bare")) {
                         tile = factory.createBareSurface(hasDirt, hasChargeStation);
                     } else if (tileType.equals("lowCarpet")) {
                         tile = factory.createLowCarpet(hasDirt, hasChargeStation);
                     } else if (tileType.equals("highCarpet")) {
                         tile = factory.createHighCarpet(hasDirt, hasChargeStation);
-                    } 
+                    } else {
+                        System.err.println("***ERROR: unknown surface detected.");
+                        throw new Exception();
+                    }
 
                     // adding tile to the layout
                     layout.get(i).add(tile);
                 } catch (Exception e) {
-                    System.err.println("***ERROR: unknown surface detected.");
+                    e.printStackTrace();
                 }
             }
         }
@@ -85,8 +91,10 @@ public class FloorLayout implements IFloorLayout {
      */
     @Override
     public void printDetailLayout() {
-        for (List<ISurfaces> tiles : floor)
-            System.out.printf("[%s]\n", tiles);
+        if (floor == null) throw new NullPointerException();
+
+        for (List<ISurfaces> tilesList : floor)
+            System.out.printf("[%s]\n", tilesList);
     }
 
     /***
@@ -95,13 +103,13 @@ public class FloorLayout implements IFloorLayout {
      */
     @Override
     public String toString() {
+        if (floor == null) throw new NullPointerException();
+
         StringBuilder grid = new StringBuilder();
 
-        for (int i = 0; i < floor.size(); i++) {
-            for (int j = 0; j < floor.get(i).size(); j++) {
-                List<ISurfaces> row = floor.get(i);
-                ISurfaces t = row.get(j);
-                grid.append(String.format("%-15s", t.getSurfaceType()));
+        for (List<ISurfaces> row : floor) {
+            for (ISurfaces tile : row) {
+                grid.append(String.format("[%-10s%-5s", tile.getSurfaceType(),"]"));
             }
             grid.append("\n");
         }

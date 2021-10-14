@@ -4,13 +4,10 @@ import com.se459.floor.interfaces.ISurfaces;
 
 public class FloorTile implements ISurfaces {
 
-    int xCoordinate;
-    int yCoordintate;
     private String surfaceType;
     private int surfaceCost;
     private boolean isDirty;
     private boolean hasChargeStation;
-    
 
     public FloorTile (int floorCost, String surfaceName, boolean isDirty, boolean hasChargeStation) {
         this.surfaceType = surfaceName;
@@ -36,7 +33,7 @@ public class FloorTile implements ISurfaces {
 
     @Override
     public String toString() {
-        return String.format("{type:%s, cost:%d, dirty:%s, station:%s}",
+        return String.format("{TYPE:%s, COST:%d, DIRTY:%s, STATION:%s}",
             surfaceType,surfaceCost,isDirty,hasChargeStation);
     }
 
