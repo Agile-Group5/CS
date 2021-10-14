@@ -1,7 +1,7 @@
 package com.se459;
 
-import com.se459.floor.SurfacesFactory;
-import com.se459.floor.interfaces.ISurfaces;
+import com.se459.floor.FloorLayout;
+import com.se459.floor.interfaces.IFloorLayout;
 
 /**
  * Hello world!
@@ -11,6 +11,16 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "Hello World!" );
+        IFloorLayout floor = new FloorLayout("floor_layout.json");
+
+        // printing floor in detail
+        floor.printDetailLayout();
+
+
+        System.out.printf("\n\n\n");
+
+        // printing floor
+        System.out.println(floor.toString());
+
     }
 }
