@@ -1,0 +1,27 @@
+[
+	[{
+		"type": "bare",
+		"isDirty": false,
+		"hasChargeStation": true
+	}, {
+		"type": "bare",
+		"isDirty": true,
+		"hasChargeStation": false
+	}],
+
+	[{
+		"type": "lowCarpet",
+		"isDirty": true,
+		"hasChargeStation": false
+	}, {
+		"type": "highCarpet",
+		"isDirty": false,
+		"hasChargeStation": false
+	}],
+
+	[{
+		"type": "lowCarpet",
+		"isDirty": false,
+		"hasChargeStation": false
+	}]
+]
