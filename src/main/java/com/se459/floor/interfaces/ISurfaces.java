@@ -12,4 +12,8 @@ public interface ISurfaces {
 
     void updateCleanStatus(boolean hasDirt);
 
+    int getXCoord();
+
+    int getYCoord();
+
 }

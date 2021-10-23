@@ -66,11 +66,11 @@ public class FloorLayout implements IFloorLayout {
                     boolean hasChargeStation = jsonTile.getBoolean("hasChargeStation");
                 
                     if (tileType.equals("bare")) {
-                        tile = factory.createBareSurface(hasDirt, hasChargeStation);
+                        tile = factory.createBareSurface(hasDirt, hasChargeStation, i, j);
                     } else if (tileType.equals("lowCarpet")) {
-                        tile = factory.createLowCarpet(hasDirt, hasChargeStation);
+                        tile = factory.createLowCarpet(hasDirt, hasChargeStation, i, j);
                     } else if (tileType.equals("highCarpet")) {
-                        tile = factory.createHighCarpet(hasDirt, hasChargeStation);
+                        tile = factory.createHighCarpet(hasDirt, hasChargeStation, i, j);
                     } else {
                         System.err.println("***ERROR: unknown surface detected.");
                         throw new Exception();
@@ -118,7 +118,11 @@ public class FloorLayout implements IFloorLayout {
 
         for (List<ISurfaces> row : floor) {
             for (ISurfaces tile : row) {
-                grid.append(String.format("[%-10s%-5s", tile.getSurfaceType(),"]"));
+                int x = tile.getXCoord();
+                int y = tile.getYCoord();
+                String surface = tile.getSurfaceType();
+
+                grid.append(String.format("[(%d,%d): %-11s%-5s", x, y, surface,"]"));
             }
             grid.append("\n");
         }
