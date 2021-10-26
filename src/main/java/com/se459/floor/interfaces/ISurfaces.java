@@ -2,11 +2,18 @@ package com.se459.floor.interfaces;
 
 public interface ISurfaces {
 
-    String getSurfaceName();
+    String getSurfaceType();
 
     int getSurfaceCost();
 
     boolean hasDirt();
 
+    boolean hasChargeStation();
+
+    void updateCleanStatus(boolean hasDirt);
+
+    int getXCoord();
+
+    int getYCoord();
 
 }
