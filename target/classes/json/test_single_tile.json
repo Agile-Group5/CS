@@ -1,7 +1,7 @@
 [
 	[{
 		"type": "bare",
-		"isDirty": true,
+		"dirtAmt": 0,
 		"hasChargeStation": true
 	}]
 ]

@@ -1,7 +1,7 @@
 [
 	[{
 		"type": "imaginary",
-		"isDirty": true,
+		"dirtAmt": 0,
 		"hasChargeStation": true
 	}]
 ]

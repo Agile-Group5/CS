@@ -67,7 +67,7 @@ public class CSController {
 
         // can floor tiles have a location var to ensure we can pinpoint which tile the
         // obj is on?
-        System.out.printf("Cleaning floor tile %s with %d units of power \n", ft.getSurfaceName(), ft.getSurfaceCost());
+        System.out.printf("Cleaning floor tile %s with %d units of power \n", ft.getSurfaceType(), ft.getSurfaceCost());
 
         CleanSweepSingleton.updateCurrentCharge(ft.getSurfaceCost());
         CleanSweepSingleton.updateCurrentDirt();

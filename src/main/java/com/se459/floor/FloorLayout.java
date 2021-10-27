@@ -62,15 +62,15 @@ public class FloorLayout implements IFloorLayout {
                 try {
                     ISurfaces tile = null;
                     String tileType = jsonTile.getString("type");
-                    boolean hasDirt = jsonTile.getBoolean("isDirty");
+                    int dirtAmt = jsonTile.getInt("dirtAmt");
                     boolean hasChargeStation = jsonTile.getBoolean("hasChargeStation");
                 
                     if (tileType.equals("bare")) {
-                        tile = factory.createBareSurface(hasDirt, hasChargeStation, i, j);
+                        tile = factory.createBareSurface(dirtAmt, hasChargeStation, i, j);
                     } else if (tileType.equals("lowCarpet")) {
-                        tile = factory.createLowCarpet(hasDirt, hasChargeStation, i, j);
+                        tile = factory.createLowCarpet(dirtAmt, hasChargeStation, i, j);
                     } else if (tileType.equals("highCarpet")) {
-                        tile = factory.createHighCarpet(hasDirt, hasChargeStation, i, j);
+                        tile = factory.createHighCarpet(dirtAmt, hasChargeStation, i, j);
                     } else {
                         System.err.println("***ERROR: unknown surface detected.");
                         throw new Exception();
@@ -121,8 +121,10 @@ public class FloorLayout implements IFloorLayout {
                 int x = tile.getXCoord();
                 int y = tile.getYCoord();
                 String surface = tile.getSurfaceType();
+                boolean dirty = tile.hasDirt();
+                String isClean = (!dirty)? "clean": "dirty";
 
-                grid.append(String.format("[(%d,%d): %-11s%-5s", x, y, surface,"]"));
+                grid.append(String.format("[(%d,%d): %-10s, %s%-5s", x, y, surface, isClean,"]"));
             }
             grid.append("\n");
         }

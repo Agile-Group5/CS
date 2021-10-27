@@ -1,7 +1,7 @@
 [
 	[{
 		"CreditCard": "Visa",
-		"isDirty": true,
+		"dirtAmt": 0,
 		"hasChargeStation": true
 	}]
 ]

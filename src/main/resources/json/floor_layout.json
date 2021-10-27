@@ -1,27 +1,43 @@
 [
 	[{
 		"type": "bare",
-		"isDirty": false,
-		"hasChargeStation": true
+		"dirtAmt": 0,
+		"hasChargeStation": false
+	}, {
+		"type": "lowCarpet",
+		"dirtAmt": 1,
+		"hasChargeStation": false
 	}, {
 		"type": "bare",
-		"isDirty": true,
+		"dirtAmt": 2,
 		"hasChargeStation": false
 	}],
 
 	[{
 		"type": "lowCarpet",
-		"isDirty": true,
+		"dirtAmt": 3,
 		"hasChargeStation": false
 	}, {
 		"type": "highCarpet",
-		"isDirty": false,
+		"dirtAmt": 4,
+		"hasChargeStation": true
+	}, {
+		"type": "lowCarpet",
+		"dirtAmt": 5,
 		"hasChargeStation": false
 	}],
 
 	[{
+		"type": "bare",
+		"dirtAmt": 6,
+		"hasChargeStation": false
+	}, {
 		"type": "lowCarpet",
-		"isDirty": false,
+		"dirtAmt": 7,
+		"hasChargeStation": false
+	}, {
+		"type": "bare",
+		"dirtAmt": 8,
 		"hasChargeStation": false
 	}]
 ]

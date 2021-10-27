@@ -1,5 +1,6 @@
 package com.se459.floor.interfaces;
 
+
 public interface ISurfaces {
 
     String getSurfaceType();
@@ -10,7 +11,7 @@ public interface ISurfaces {
 
     boolean hasChargeStation();
 
-    void updateCleanStatus(boolean hasDirt);
+    void updateCleanStatus();
 
     int getXCoord();
 
