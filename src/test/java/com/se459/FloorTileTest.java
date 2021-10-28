@@ -11,7 +11,7 @@ public class FloorTileTest {
 
     @Test
     public void testGetMethodsSuccess() {
-        ISurfaces testTile = new FloorTile(1, "bare", true, false, 0, 0);
+        ISurfaces testTile = new FloorTile(1, "bare", 1, false, 0, 0);
         String testType;
         int testCost;
         boolean testDirty1;
@@ -27,7 +27,7 @@ public class FloorTileTest {
         testXCoord = testTile.getXCoord();
         testYCoord = testTile.getYCoord();
 
-        testTile.updateCleanStatus(false);
+        testTile.updateCleanStatus();
         testDirty2 = testTile.hasDirt();
 
         assertEquals("bare", testType);

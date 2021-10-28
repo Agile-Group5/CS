@@ -6,18 +6,18 @@ import com.se459.floor.interfaces.ISurfacesFactory;
 public class SurfacesFactory implements ISurfacesFactory {
 
     @Override
-    public ISurfaces createBareSurface(boolean isDirty, boolean hasChargeStation, int xCoord, int yCoord) {
-        return new FloorTile(1, "bare", isDirty, hasChargeStation, xCoord, yCoord);
+    public ISurfaces createBareSurface(int dirtAmt, boolean hasChargeStation, int xCoord, int yCoord) {
+        return new FloorTile(1, "bare", dirtAmt, hasChargeStation, xCoord, yCoord);
     }
 
     @Override
-    public ISurfaces createLowCarpet(boolean isDirty, boolean hasChargeStation, int xCoord, int yCoord) {
-        return new FloorTile(2, "lowCarpet", isDirty, hasChargeStation, xCoord, yCoord);
+    public ISurfaces createLowCarpet(int dirtAmt, boolean hasChargeStation, int xCoord, int yCoord) {
+        return new FloorTile(2, "lowCarpet", dirtAmt, hasChargeStation, xCoord, yCoord);
     }
 
     @Override
-    public ISurfaces createHighCarpet(boolean isDirty, boolean hasChargeStation, int xCoord, int yCoord) {
-        return new FloorTile(3, "highCarpet", isDirty, hasChargeStation, xCoord, yCoord);
+    public ISurfaces createHighCarpet(int dirtAmt, boolean hasChargeStation, int xCoord, int yCoord) {
+        return new FloorTile(3, "highCarpet", dirtAmt, hasChargeStation, xCoord, yCoord);
     }
 
 }

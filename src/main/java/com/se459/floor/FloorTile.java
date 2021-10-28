@@ -1,23 +1,37 @@
 package com.se459.floor;
 
+
 import com.se459.floor.interfaces.ISurfaces;
 
 public class FloorTile implements ISurfaces {
 
     private String surfaceType;
     private int surfaceCost;
+    private int dirtAmt; // cannot show this since the CS has no sensor to detect dirt amount. Only if clean/unclean.
     private boolean isDirty;
     private boolean hasChargeStation;
     private final int xCoord;
     private final int yCoord;
 
-    public FloorTile (int floorCost, String surfaceName, boolean isDirty, boolean hasChargeStation, int x, int y) {
+    public FloorTile (int floorCost, String surfaceName, int dirtAmt, boolean hasChargeStation, int x, int y) {
         this.surfaceType = surfaceName;
         this.surfaceCost = floorCost;
-        this.isDirty = isDirty;
+        this.dirtAmt = dirtAmt;
+        this.isDirty = true;
         this.hasChargeStation = hasChargeStation;
         this.xCoord = x;
         this.yCoord = y;
+
+        checkIfDirty();
+    }
+
+    private void checkIfDirty() {
+        if (dirtAmt <= 0) {
+            this.dirtAmt = 0;
+            this.isDirty = false;
+        } else {
+            this.isDirty = true;
+        }
     }
 
     @Override
@@ -33,7 +47,10 @@ public class FloorTile implements ISurfaces {
     public boolean hasChargeStation() { return hasChargeStation; }
 
     @Override
-    public void updateCleanStatus(boolean hasDirt) { isDirty = hasDirt; }
+    public void updateCleanStatus() {
+        dirtAmt--;
+        checkIfDirty();
+    }
 
     @Override
     public int getXCoord() { return xCoord; }
