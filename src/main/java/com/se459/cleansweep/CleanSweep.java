@@ -17,10 +17,16 @@ public class CleanSweep {
 
     private boolean shutdown;
 
+    //added powerunit and floortile to use when you move the robot use these to calculate the
+    //battery levels while traversing - DT
+    private PowerUnit powerUnit;
+    private FloorTile floorTile;
+
     public CleanSweep() { // initializing assuming that CS is at charging station
         currentCharge = maxCharge;
         currentDirtCapacity = maxDirtCapacity;
         shutdown = false;
+        powerUnit = new PowerUnit(floorTile);
     }
 
     public void run() {
