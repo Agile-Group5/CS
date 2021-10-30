@@ -5,8 +5,6 @@ public interface ISurfaces {
 
     String getSurfaceType();
 
-    int getSurfaceCost();
-
     boolean hasDirt();
 
     boolean hasChargeStation();

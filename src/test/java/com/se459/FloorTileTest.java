@@ -11,9 +11,8 @@ public class FloorTileTest {
 
     @Test
     public void testGetMethodsSuccess() {
-        ISurfaces testTile = new FloorTile(1, "bare", 1, false, 0, 0);
+        ISurfaces testTile = new FloorTile("bare", 1, false, 0, 0);
         String testType;
-        int testCost;
         boolean testDirty1;
         boolean testDirty2;
         boolean testHasStation;
@@ -21,7 +20,6 @@ public class FloorTileTest {
         int testYCoord;
 
         testType = testTile.getSurfaceType();
-        testCost = testTile.getSurfaceCost();
         testDirty1 = testTile.hasDirt();
         testHasStation = testTile.hasChargeStation();
         testXCoord = testTile.getXCoord();
@@ -31,7 +29,6 @@ public class FloorTileTest {
         testDirty2 = testTile.hasDirt();
 
         assertEquals("bare", testType);
-        assertEquals(1, testCost);
         assertEquals(true, testDirty1);
         assertEquals(false, testHasStation);
         assertEquals(false, testDirty2);
