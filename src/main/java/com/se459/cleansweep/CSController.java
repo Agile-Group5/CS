@@ -1,34 +1,37 @@
 package com.se459.cleansweep;
 
+import java.util.List;
 import java.util.Stack;
 
 import com.se459.floor.FloorTile;
+import com.se459.floor.interfaces.IFloorLayout;
+import com.se459.floor.interfaces.ISurfaces;
 
-public class CSController {
+public class CSController implements Runnable {
 
     // Sensors -- Surfaces, Navigation, Layout
-
     // Movement -- forward, backward, right, left; *path management
-
     // Power Management -- capacity and calculations
-
     // Dirt Management -- capacity and return to charge stations
 
     // Path Taken by CS
-    private Stack<FloorTile> path;
+    private Stack<ISurfaces> path;
+    private ISurfaces cleanSweepLocation;
+    List<List<ISurfaces>> floorLayout;
 
-    private FloorTile cleanSweepLocation;
+    public CSController(IFloorLayout fl) {
 
-    public CSController(FloorTile init) {
-
-        path = new Stack<FloorTile>();
+        path = new Stack<ISurfaces>();
+        this.floorLayout = fl.getFloor();
 
         // get current location and push to the path obj
         // first tile should ideally be charge station location
-        path.push(init);
+        path.push(floorLayout.get(0).get(0));
+
     }
 
-    public static void run() {
+    @Override
+    public void run() {
 
         // this will probably be the biggest method and will call the other methods in
         // the private methods depending on the conditions
@@ -41,6 +44,13 @@ public class CSController {
 
         // need some sort of mechanism that monitors both power levels & dirt to ensure
         // the vacuum returns when needed
+
+        for (List l : floorLayout) {
+            for ((ISurfaces) surface : l) {
+
+            }
+
+        }
 
     }
 
@@ -56,7 +66,7 @@ public class CSController {
         cleanSweepLocation = next;
     }
 
-    private double costToTraverse(FloorTile current, FloorTile next) {
+    private double costToTraverse(ISurfaces current, ISurfaces next) {
         // energy cost to travel is avg of the cost of each tile
         return (current.getSurfaceCost() + next.getSurfaceCost()) / 2;
     }
@@ -78,9 +88,9 @@ public class CSController {
     }
 
     private void returnToChargeStation() { // currently working on moving backwards on the path taken
-        FloorTile ft = path.pop();
+        ISurfaces ft = path.pop();
 
-        while (ft != null) {
+        while (!ft.hasChargeStation()) {
             // power update to move to previous tile
             CleanSweepSingleton.updateCurrentCharge(costToTraverse(cleanSweepLocation, ft));
 
@@ -89,7 +99,6 @@ public class CSController {
 
             ft = path.pop();
         }
-
     }
 
     private void shutdownCS() { // should be invoked when CS cannot move in any direction

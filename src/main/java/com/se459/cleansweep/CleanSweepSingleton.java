@@ -6,17 +6,18 @@ public class CleanSweepSingleton {
 
     private static CleanSweepSingleton instance = new CleanSweepSingleton();
 
-    private final int maxDirtCapacity = 50;
     private final double maxCharge = 250;
-
     private double currentCharge;
-    private int currentDirt;
     private boolean shutdown;
+
+    private DirtBin dirtBin;
+    private Battery battery;
 
     private CleanSweepSingleton() {
         currentCharge = maxCharge;
-        currentDirt = maxDirtCapacity;
-        shutdown = false;
+        dirtBin = new DirtBin();
+        battery = new Battery();
+        startup();
     }
 
     public static double getCurrentCharge() {
@@ -32,7 +33,7 @@ public class CleanSweepSingleton {
     }
 
     private int getDirt() {
-        return currentDirt;
+        return dirtBin.getDirtLevel();
     }
 
     public static boolean isShutdown() {
@@ -51,6 +52,14 @@ public class CleanSweepSingleton {
         instance.su();
     }
 
+    public static void charge() {
+        instance.chargeBattery();
+    }
+
+    private void chargeBattery() {
+        battery.charge();
+    }
+
     private void su() {
         shutdown = false;
         System.out.println("CleanSweep is powered up and ready to go");
@@ -66,7 +75,7 @@ public class CleanSweepSingleton {
     }
 
     private void updateCC(double reduction) {
-        currentCharge -= reduction;
+        battery.update(reduction);
     }
 
     public static void updateCurrentDirt() {
@@ -74,6 +83,6 @@ public class CleanSweepSingleton {
     }
 
     private void updateCD() {
-        currentDirt--;
+        dirtBin.update();
     }
 }
