@@ -22,11 +22,8 @@ public class SurfacesFactoryTest {
         testHighCarpet = testFactory.createHighCarpet(0, false, 2, 2);
 
         assertEquals("bare", testBare.getSurfaceType());
-        assertEquals(1, testBare.getSurfaceCost());
         assertEquals("lowCarpet", testLowCarpet.getSurfaceType());
-        assertEquals(2, testLowCarpet.getSurfaceCost());
         assertEquals("highCarpet", testHighCarpet.getSurfaceType());
-        assertEquals(3, testHighCarpet.getSurfaceCost());
     }
     
 }

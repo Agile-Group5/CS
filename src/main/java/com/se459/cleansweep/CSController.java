@@ -79,9 +79,27 @@ public class CSController implements Runnable {
         currentLocation = next;
     }
 
+    private double getSurfaceCost(ISurfaces tile) {
+        if (tile == null) throw new IllegalArgumentException();
+
+        String surface = tile.getSurfaceType();
+        double cost = 0.0;
+
+        if (surface.equals("bare")) {
+            cost = 1.0;
+        } else if (surface.equals("lowCarpet")) {
+            cost = 2.0;
+        } else if (surface.equals("highCarpet")) {
+            cost = 3.0;
+        }
+
+        return cost;
+    }
+
+
     private double costToTraverse(ISurfaces current, ISurfaces next) {
         // energy cost to travel is avg of the cost of each tile
-        return (current.getSurfaceCost() + next.getSurfaceCost()) / 2;
+        return (getSurfaceCost(current) + getSurfaceCost(next)) / 2;
     }
 
     private void clean() {
