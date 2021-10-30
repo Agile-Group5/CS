@@ -2,8 +2,6 @@ package com.se459.cleansweep;
 
 import java.util.List;
 import java.util.Stack;
-
-import com.se459.floor.FloorTile;
 import com.se459.floor.interfaces.IFloorLayout;
 import com.se459.floor.interfaces.ISurfaces;
 
@@ -16,7 +14,7 @@ public class CSController implements Runnable {
 
     // Path Taken by CS
     private Stack<ISurfaces> path;
-    private ISurfaces cleanSweepLocation;
+    private ISurfaces currentLocation;
     List<List<ISurfaces>> floorLayout;
 
     public CSController(IFloorLayout fl) {
@@ -26,8 +24,7 @@ public class CSController implements Runnable {
 
         // get current location and push to the path obj
         // first tile should ideally be charge station location
-        path.push(floorLayout.get(0).get(0));
-
+        currentLocation = floorLayout.get(0).get(0);
     }
 
     @Override
@@ -45,25 +42,34 @@ public class CSController implements Runnable {
         // need some sort of mechanism that monitors both power levels & dirt to ensure
         // the vacuum returns when needed
 
-        for (List l : floorLayout) {
-            for ((ISurfaces) surface : l) {
+        // System.out.println("You made it to the controller's run()");
 
+        for (int j = 0; j < floorLayout.size(); j++) {
+            List<ISurfaces> row = floorLayout.get(j);
+            for (int i = 1; i < row.size(); i++) {
+                ISurfaces ft = row.get(i);
+                traverse(ft);
+                System.out.printf("Moving to and cleaning tile at (%d,%d) \n", ft.getXCoord(), ft.getYCoord());
+                while (currentLocation.hasDirt()) {
+                    clean();
+                }
             }
-
         }
+        returnToChargeStation();
+        shutdownCS();
 
     }
 
-    private void traverse(FloorTile next) {
+    private void traverse(ISurfaces next) {
         // retrieve current location of the device and add it to the path before moving
         // on
-        path.push(cleanSweepLocation);
+        path.push(currentLocation);
 
         // update the power level of the vacuum
-        CleanSweepSingleton.updateCurrentCharge(costToTraverse(cleanSweepLocation, next));
+        CleanSweepSingleton.updateCurrentCharge(costToTraverse(currentLocation, next));
 
         // set location of vacuum to the next tile so it 'moves'
-        cleanSweepLocation = next;
+        currentLocation = next;
     }
 
     private double costToTraverse(ISurfaces current, ISurfaces next) {
@@ -71,19 +77,21 @@ public class CSController implements Runnable {
         return (current.getSurfaceCost() + next.getSurfaceCost()) / 2;
     }
 
-    private void clean(FloorTile ft) {
-        // need some sort of check from the tile or sensor if it's clean to call this
-        // method
+    private void clean() {
+        System.out.printf("Cleaning floor tile (%d, %d)\n", currentLocation.getXCoord(), currentLocation.getYCoord());
 
-        // can floor tiles have a location var to ensure we can pinpoint which tile the
-        // obj is on?
-        System.out.printf("Cleaning floor tile %s with %d units of power \n", ft.getSurfaceType(), ft.getSurfaceCost());
+        currentLocation.updateCleanStatus();
 
-        CleanSweepSingleton.updateCurrentCharge(ft.getSurfaceCost());
+        CleanSweepSingleton.updateCurrentCharge(1);
         CleanSweepSingleton.updateCurrentDirt();
 
         System.out.printf("[Current power level: %f] [Current dirt level: %d]\n",
                 CleanSweepSingleton.getCurrentCharge(), CleanSweepSingleton.getCurrentDirt());
+
+        if (currentLocation.hasDirt())
+            System.out.println("Oops, need to clean again!");
+        else
+            System.out.println("All clean and moving on!");
 
     }
 
@@ -92,13 +100,16 @@ public class CSController implements Runnable {
 
         while (!ft.hasChargeStation()) {
             // power update to move to previous tile
-            CleanSweepSingleton.updateCurrentCharge(costToTraverse(cleanSweepLocation, ft));
+            CleanSweepSingleton.updateCurrentCharge(costToTraverse(currentLocation, ft));
 
             // update current location to previous tile
-            cleanSweepLocation = ft;
+            currentLocation = ft;
 
+            System.out.printf("Returning to charge from location at (%d, %d)\n", ft.getXCoord(), ft.getYCoord());
             ft = path.pop();
         }
+
+        System.out.printf("At (%d, %d) to charge \n", ft.getXCoord(), ft.getYCoord());
     }
 
     private void shutdownCS() { // should be invoked when CS cannot move in any direction

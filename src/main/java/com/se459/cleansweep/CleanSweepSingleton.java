@@ -6,18 +6,13 @@ public class CleanSweepSingleton {
 
     private static CleanSweepSingleton instance = new CleanSweepSingleton();
 
-    private final double maxCharge = 250;
-    private double currentCharge;
     private boolean shutdown;
-
     private DirtBin dirtBin;
     private Battery battery;
 
     private CleanSweepSingleton() {
-        currentCharge = maxCharge;
         dirtBin = new DirtBin();
         battery = new Battery();
-        startup();
     }
 
     public static double getCurrentCharge() {
@@ -25,7 +20,7 @@ public class CleanSweepSingleton {
     }
 
     private double getCharge() {
-        return currentCharge;
+        return battery.currentCharge();
     }
 
     public static int getCurrentDirt() {

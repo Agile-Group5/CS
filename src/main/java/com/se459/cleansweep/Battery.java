@@ -12,7 +12,7 @@ public class Battery {
     public void update(double diff) {
         currentCharge -= diff;
         double percent = (currentCharge / maxCharge) * 100;
-        System.out.printf("Current battery levels are: %d%\n", percent);
+        System.out.println("Current battery levels are: " + percent + "%");
     }
 
     public double currentCharge() {
