@@ -17,6 +17,8 @@ public class CSController implements Runnable {
     private ISurfaces currentLocation;
     List<List<ISurfaces>> floorLayout;
 
+    private int count = 0;
+
     public CSController(IFloorLayout fl) {
 
         path = new Stack<ISurfaces>();
@@ -25,6 +27,7 @@ public class CSController implements Runnable {
         // get current location and push to the path obj
         // first tile should ideally be charge station location
         currentLocation = floorLayout.get(0).get(0);
+        startupCS();
     }
 
     @Override
@@ -46,17 +49,21 @@ public class CSController implements Runnable {
 
         for (int j = 0; j < floorLayout.size(); j++) {
             List<ISurfaces> row = floorLayout.get(j);
-            for (int i = 1; i < row.size(); i++) {
+            for (int i = 0; i < row.size(); i++) {
                 ISurfaces ft = row.get(i);
-                traverse(ft);
-                System.out.printf("Moving to and cleaning tile at (%d,%d) \n", ft.getXCoord(), ft.getYCoord());
-                while (currentLocation.hasDirt()) {
-                    clean();
+                count++;
+                if (ft != currentLocation) {
+                    traverse(ft);
+                    System.out.printf("Moving to and cleaning tile at (%d,%d) \n", ft.getXCoord(), ft.getYCoord());
+                    while (currentLocation.hasDirt()) {
+                        clean();
+                    }
                 }
             }
         }
         returnToChargeStation();
         shutdownCS();
+        System.out.printf("Total tiles cleaned: %d\n", count);
 
     }
 
