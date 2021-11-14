@@ -2,6 +2,10 @@
 	[{
 		"type": "imaginary",
 		"dirtAmt": 0,
-		"hasChargeStation": true
+		"hasChargeStation": true,
+		"northEdge": "unknown",
+		"eastEdge": "obstacle",
+		"southEdge": "obstacle",
+		"westEdge": "obstacle"
 	}]
 ]

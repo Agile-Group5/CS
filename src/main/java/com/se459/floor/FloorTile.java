@@ -11,14 +11,23 @@ public class FloorTile implements ISurfaces {
     private boolean hasChargeStation;
     private final int xCoord;
     private final int yCoord;
+    private final String northEdge;
+    private final String eastEdge;
+    private final String southEdge;
+    private final String westEdge;
 
-    public FloorTile (String surfaceName, int dirtAmt, boolean hasChargeStation, int x, int y) {
+    public FloorTile (String surfaceName, int dirtAmt, boolean hasChargeStation, int x, int y,
+                        String northEdge, String eastEdge, String southEdge, String westEdge) {
         this.surfaceType = surfaceName;
         this.dirtAmt = dirtAmt;
         this.isDirty = true;
         this.hasChargeStation = hasChargeStation;
         this.xCoord = x;
         this.yCoord = y;
+        this.northEdge = northEdge;
+        this.eastEdge = eastEdge;
+        this.southEdge = southEdge;
+        this.westEdge = westEdge;
 
         checkIfDirty();
     }
@@ -54,9 +63,21 @@ public class FloorTile implements ISurfaces {
     public int getYCoord() { return yCoord; }
 
     @Override
+    public String getNorthEdge() { return northEdge; }
+
+    @Override
+    public String getEastEdge() { return eastEdge; }
+
+    @Override
+    public String getSouthEdge() { return southEdge; }
+
+    @Override
+    public String getWestEdge() { return westEdge; }
+
+    @Override
     public String toString() {
-        return String.format("{X:%d, Y:%d, TYPE:%s, DIRTY:%b, STATION:%b}",
-            xCoord, yCoord, surfaceType, isDirty, hasChargeStation);
+        return String.format("{X:%d, Y:%d, TYPE:%s, DIRTY:%b, STATION:%b, NORTH: %s, EAST: %s, SOUTH: %s, WEST: %s}\n",
+            xCoord, yCoord, surfaceType, isDirty, hasChargeStation, northEdge, eastEdge, southEdge, westEdge);
     }
 
 }

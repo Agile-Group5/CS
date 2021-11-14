@@ -15,4 +15,12 @@ public interface ISurfaces {
 
     int getYCoord();
 
+    String getNorthEdge();
+
+    String getEastEdge();
+
+    String getSouthEdge();
+
+    String getWestEdge();
+
 }

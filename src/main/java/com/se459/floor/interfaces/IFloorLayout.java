@@ -4,9 +4,7 @@ import java.util.List;
 
 public interface IFloorLayout {
     
-    public List<List<ISurfaces>> getFloor();
+    List<List<ISurfaces>> getFloor();
 
-    public void printDetailLayout();
-
-    
+    void printDetailLayout();    
 }

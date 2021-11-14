@@ -64,13 +64,21 @@ public class FloorLayout implements IFloorLayout {
                     String tileType = jsonTile.getString("type");
                     int dirtAmt = jsonTile.getInt("dirtAmt");
                     boolean hasChargeStation = jsonTile.getBoolean("hasChargeStation");
+
+                    String northEdge = (jsonTile.has("northEdge"))? jsonTile.getString("northEdge") : "unknown";
+                    String eastEdge = (jsonTile.has("eastEdge"))? jsonTile.getString("eastEdge") : "unknown";
+                    String southEdge = (jsonTile.has("southEdge"))? jsonTile.getString("southEdge") : "unknown";
+                    String westEdge = (jsonTile.has("westEdge"))? jsonTile.getString("westEdge") : "unknown";
                 
                     if (tileType.equals("bare")) {
-                        tile = factory.createBareSurface(dirtAmt, hasChargeStation, i, j);
+                        tile = factory.createBareSurface(dirtAmt, hasChargeStation, i, j,
+                                                            northEdge, eastEdge, southEdge, westEdge);
                     } else if (tileType.equals("lowCarpet")) {
-                        tile = factory.createLowCarpet(dirtAmt, hasChargeStation, i, j);
+                        tile = factory.createLowCarpet(dirtAmt, hasChargeStation, i, j,
+                                                            northEdge, eastEdge, southEdge, westEdge);
                     } else if (tileType.equals("highCarpet")) {
-                        tile = factory.createHighCarpet(dirtAmt, hasChargeStation, i, j);
+                        tile = factory.createHighCarpet(dirtAmt, hasChargeStation, i, j,
+                                                            northEdge, eastEdge, southEdge, westEdge);
                     } else {
                         System.err.println("***ERROR: unknown surface detected.");
                         throw new Exception();
@@ -85,6 +93,24 @@ public class FloorLayout implements IFloorLayout {
         }
 
         return layout;
+    }
+
+    private String determineIcon(char cardinalDirection, String tileEdgeDirection) {
+        String icon = "?";        
+
+        if (tileEdgeDirection.equals("open")) {
+            // check cardinal direction
+            if ((cardinalDirection == 'N') || (cardinalDirection == 'S'))
+                icon = "|";
+            else if ((cardinalDirection == 'E') || (cardinalDirection == 'W'))
+                icon = "=";
+        } else if (tileEdgeDirection.equals("obstacle")) {
+            icon = "X";
+        } else if (tileEdgeDirection.equals("stairs")) {
+            icon = "S";
+        }
+        
+        return icon;
     }
     
     /***
@@ -124,7 +150,7 @@ public class FloorLayout implements IFloorLayout {
                 boolean dirty = tile.hasDirt();
                 String isClean = (!dirty)? "clean": "dirty";
 
-                grid.append(String.format("[(%d,%d): %-10s, %s%-5s", x, y, surface, isClean,"]"));
+                grid.append(String.format("[(%d,%d): %-10s, %s %-5s", x, y, surface, isClean,"]"));
             }
             grid.append("\n");
         }
