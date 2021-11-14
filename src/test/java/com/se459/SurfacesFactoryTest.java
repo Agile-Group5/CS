@@ -17,9 +17,9 @@ public class SurfacesFactoryTest {
         ISurfaces testLowCarpet;
         ISurfaces testHighCarpet;
 
-        testBare = testFactory.createBareSurface(0, true, 0, 0);
-        testLowCarpet = testFactory.createLowCarpet(0, false, 1, 1);
-        testHighCarpet = testFactory.createHighCarpet(0, false, 2, 2);
+        testBare = testFactory.createBareSurface(0, true, 0, 0, "obstacle", "obstacle", "obstacle", "obstacle");
+        testLowCarpet = testFactory.createLowCarpet(0, false, 1, 1, "obstacle", "obstacle", "obstacle", "obstacle");
+        testHighCarpet = testFactory.createHighCarpet(0, false, 2, 2, "obstacle", "obstacle", "obstacle", "obstacle");
 
         assertEquals("bare", testBare.getSurfaceType());
         assertEquals("lowCarpet", testLowCarpet.getSurfaceType());

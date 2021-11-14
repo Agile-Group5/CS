@@ -2,6 +2,10 @@
 	[{
 		"CreditCard": "Visa",
 		"dirtAmt": 0,
-		"hasChargeStation": true
+		"hasChargeStation": true,
+		"northEdge": "obstacle",
+		"eastEdge": "obstacle",
+		"southEdge": "obstacle",
+		"westEdge": "obstacle"
 	}]
 ]
